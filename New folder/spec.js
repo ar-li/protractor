@@ -11,6 +11,7 @@ describe('Protractor Demo App', function() {
 	});
 
 	it('gets all elements', function() {
+        expect(browser.getCurrentUrl()).toEqual('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
 		angularHomepage.findPhones().then(function(elements){
 		return elements.length;
     })
@@ -18,15 +19,16 @@ describe('Protractor Demo App', function() {
 		console.log("...." + count);
 		expect(count).toBeGreaterThan(0);
 	});
-	for(var i = 1; i<21;i++){
-	    browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope']["+i+"]/a[2]")).click();
-	    browser.findElement(by.xpath("//h1[@class='ng-binding ng-scope']")).getText().then(function(text){
-	    	console.log(text);
-	    });
+	/*for(var i = 1; i<21;i++){
+        angularHomepage.goToPhone(i);
         pPage.printName();
-        pPage.imgSwitch();
+       // pPage.imgSwitch();
 	    angularHomepage.get();
-	};
-	
-});
+	};*/
+    });
+	it('searches for a phone on the main page', function(){
+        var currUrl = angularHomepage.searchPhone("MOTOROLA XOOM\u2122");
+        expect(currUrl.toEqual('http://angular.github.io/angular-phonecat/step-12/app/#/phones/motorola-xoom');
+    });
+
 });

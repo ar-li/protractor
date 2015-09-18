@@ -13,8 +13,7 @@ var PhonePage = function () {
         browser.driver.findElements(by.xpath("//li[@class='ng-scope']")).then(function (elems) {
             for (i = 1; i < elems.length; i++) {
                 elems[i].click();
-            }
-            ;
+            };
         });
 
     };
