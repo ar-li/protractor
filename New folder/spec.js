@@ -2,6 +2,7 @@
 
 var HomePage = require("./HomePage.js");
 var PhonePage = require("./PhonePage.js");
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 150000;
 describe('Protractor Demo App', function() {
 
 	beforeEach(function() {
@@ -19,16 +20,17 @@ describe('Protractor Demo App', function() {
 		console.log("...." + count);
 		expect(count).toBeGreaterThan(0);
 	});
-	/*for(var i = 1; i<21;i++){
+	for(var i = 1; i<20;i++){
         angularHomepage.goToPhone(i);
+        browser.waitForAngular();
         pPage.printName();
        // pPage.imgSwitch();
 	    angularHomepage.get();
-	};*/
+	};
     });
 	it('searches for a phone on the main page', function(){
-        var currUrl = angularHomepage.searchPhone("MOTOROLA XOOM\u2122");
-        expect(currUrl.toEqual('http://angular.github.io/angular-phonecat/step-12/app/#/phones/motorola-xoom');
+
+        expect(browser.getCurrentUrl()).toBe('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
     });
 
 });
