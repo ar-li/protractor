@@ -11,7 +11,7 @@ describe('Protractor Demo App', function() {
 		angularHomepage.get();
 	});
 
-	it('gets all elements', function() {
+	/*it('gets all elements', function() {
         expect(browser.getCurrentUrl()).toEqual('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
 		angularHomepage.findPhones().then(function(elements){
 		return elements.length;
@@ -27,10 +27,25 @@ describe('Protractor Demo App', function() {
        // pPage.imgSwitch();
 	    angularHomepage.get();
 	};
-    });
-	it('searches for a phone on the main page', function(){
-
-        expect(browser.getCurrentUrl()).toBe('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
-    });
+    });*/
+/*	it('searches for a phone on the main page. Test-Search-001', function(){
+		angularHomepage.searchPhone("XOOM");
+		expect(browser.getCurrentUrl()).toBe('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
+    });*/
+    it('Sorts alphabetically. Test-Sort-001', function(){
+		//var bool = angularHomepage.sortM("name");
+		//expect(browser.getCurrentUrl()).toBe('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
+        //expect(bool).toBe(true);
+       // var compSort = angularHomepage.sortM();
+      //  manSort = compSort.sort();
+      //  expect(manSort).toEqual(compSort);
+        a1 = angularHomepage.findPhones();
+        expect
+	});
+	/*
+	it('Opens a phone and checks if it\'s the chosen one. Test-Check-001', function(){
+		var href = angularHomepage.goToPhone(4);
+		expect(browser.getCurrentUrl()).toBe(href);
+	});*/
 
 });
