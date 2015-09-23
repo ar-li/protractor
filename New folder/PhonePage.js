@@ -15,7 +15,6 @@ var PhonePage = function () {
                 elems[i].click();
             };
         });
-
     };
 };
 
