@@ -1,3 +1,4 @@
+"use strict";
 var HomePage = function() {
     var chosenPhones = [];
 
@@ -49,15 +50,19 @@ var HomePage = function() {
         }
 
     };
+
+    //Enters a text value that should result in the required phones
     this.searchPhone = function (name) {
-        element(by.model("query")).sendKeys(name);
+        element(by.css("input.ng-valid")).sendKeys(name);
         //browser.findElement(by.xpath("//ul[@class='phones']/li/a[text()='MOTOROLA XOOM\u2122']")).click();
-        browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope']/a[2]"));
-        return browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope']/a[2]"));
+        //browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope']/a[2]"));
+        //return browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope']/a[2]"));
     };
+    //open the main page
     this.get = function () {
         browser.driver.get('http://angular.github.io/angular-phonecat/step-12/app/#/phones');
     };
+    //finds  the first phone
     this.findPhones = function () {
         var text1;
         var unsorted = element.all(by.repeater('phone in phones | filter:query | orderBy:orderProp')).get(1).getText().then(function (text) {
@@ -75,62 +80,25 @@ var HomePage = function() {
         // unsorted.getText().console.log(element.getText());
         return text1;
     };
+    //returns an "a" element that contains a link to the PhonePage and the name of the phone
     this.findPhoneByOrder = function (num) {
         //element.all(by.repeater('phone in phones | filter:query | orderBy:orderProp')).get(num).click();
-        return browser.findElement(by.xpath("//ul[@class='phones']//li[" + num + "]/a[2]"));
+        return element(by.xpath("//ul[@class='phones']//li[" + num + "]/a[2]"));
 
     };
+    //finds the needed
     this.goToPhone = function (i) {
         var url = browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope'][" + i + "]/a[2]")).getAttribute("href");
         browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope'][" + i + "]/a[2]")).click();
 
         return url;
     };
-    this.printName = function () {
-        browser.findElement(by.xpath("//h1[@class='ng-binding ng-scope']")).getText().then(function (text) {
-            console.log(text);
-        });
-
-    };
-    this.sortAlpha = function () {
-        var names = [];
-        names = element.all(by.repeater('phone in phones | filter:query | orderBy:orderProp')).then(function () {
-            names.sort();
-        });
-        return names;
-    };
-    this.sortM = function () {
-        //  element(by.cssContainingText('option', 'Alphabetical')).click();
-        // browser.findElement(by.css("select>option[value='age']")).click();
-        //browser.findElement(by.xpath("//select[@class='ng-valid ng-dirty ng-valid-parse ng-touched']/option[1]")).click();
-        // browser.findElement(By.css('select>option[value=\'name\']')).click();
-        this.selectDropdownByNumber(browser, 0, 1000);
-        var compSort = [];
-        for (var i = 1; i < 2; i++) {
-            compSort[i] = this.findPhoneByOrder(i);
-        }
-        return compSort;
-
-    };
+    //Prints the name of
+    //Counts the number of the phones that are shown
     this.countPhones = function () {
         return element.all(by.repeater('phone in phones | filter:query | orderBy:orderProp')).count();
     };
-    /*this.checkByName1 = function(str) {
-     var doubleCheck;
-     element.all(by.repeater('phone in phones | filter:query | orderBy:orderProp')).count().then(function (num) {
-     for (var i = 1; i <= num; i++) {
-     browser.findElement(by.xpath("//ul[@class='phones']//li[" + i + "]/a[2]")).getText().then(function (text) {
-     if (text.indexOf(str) !== -1) {
-     console.log(text);
-     doubleCheck = text;
-     }
-     });
-     }
-     }).then(function(){
-     console.log(doubleCheck);
-     return doubleCheck;
-     });
-     };*/
+    //Function for testing
     this.easy = function () {
         this.countPhones.then(function (num) {
             for (var i = 1; i = num; i++) {
@@ -139,12 +107,6 @@ var HomePage = function() {
                 });
             }
         });
-    };
-    this.findPhoneByName = function (phone) {
-        return browser.findElement(by.xpath("//li[@class='thumbnail phone-listing ng-scope'][" + i + "]/a[2]"));
-    };
-    this.checkMotor = function () { //sends back an object
-
     };
 };
 module.exports = HomePage;

@@ -1,15 +1,25 @@
 // spec.js
-
-var HomePage = require("./HomePage.js");
-var PhonePage = require("./PhonePage.js");
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 150000;
 describe('Phone Page Testing start', function() {
+    "use strict";
+
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 150000;
+
+    var HomePage = require("./HomePage.js");
+    var PhonePage = require("./PhonePage.js");
+
+    var _ = require('lodash');
+    // or a method category
+    var array = require('lodash/array');
+    // or a method (great for smaller builds with browserify/webpack)
+    var chunk = require('lodash/array/chunk');
+
+    var angularHomepage;
+    var pPage;
 
 	beforeEach(function() {
-		angularHomepage = new HomePage();
-        pPage = new PhonePage();
+        angularHomepage    = new HomePage();
+        pPage    = new PhonePage();
 		angularHomepage.get();
-
 	});
 
 	/*it('gets all elements', function() {
@@ -48,50 +58,39 @@ describe('Phone Page Testing start', function() {
 		expect(browser.getCurrentUrl()).toBe(href);
 	});*/
     it('Checks if the search results are OK', function(){
-       /*old// doubleCheck = angularHomepage.findPhoneByOrder(1);
-        //angularHomepage.checkByName("4G");
-        angularHomepage.checkByName1("4G");
-            var doubleCheck;
-        doubleCheck = angularHomepage.checkByName1("4G");
-        expect(doubleCheck).toMatch("24G");
-
-       // expect(doubleCheck instanceof Object).toBe(true);
-
-        //expect(Array.isArray(doubleCheck)).toBe(true);
-       // expect(doubleCheck).toMatch("4G");
-
-        //expect(doubleCheck).toBeGreaterThan(0);*/
-		var elementsByHand;
-		var elementsBySearch;
-        var phoneCount;
-        var phoneText = [];
-		//elementsByHand = angularHomepage.checkMotor();
-		//elementsBySearch = angularHomepage.searchPhone("Motorola");
-        //elementsBySearch.getText().then(function(text){
-		//	console.log(text);
-		//});
-        /*angularHomepage.countPhones().then(function(num){
-        expect(num).toEqual(20);
-        for(var i = 1;i<=num;i++){
-            angularHomepage.findPhoneByOrder(i).getText().then(function(text){
-                //expect(text).toEqual("20");
-            })
-        };
-        });*/
+        var phoneTextHand = [];
+        var phoneTextWeb = [];
+        var searchQ;
+        searchQ = "motorola";
+        //checks the matched phones out of all (20)
         angularHomepage.countPhones().then(function(num) {
             for (var i = 1; i <= num; i++) {
                 angularHomepage.findPhoneByOrder(i).getText().then(function(text){
-                if (text.toLowerCase().indexOf("motorola") !== -1){
-                    phoneText.push(text);
+                if (text.toLowerCase().indexOf(searchQ) !== -1){
+                    phoneTextHand.push(text.toUpperCase());
                     //console.log(phoneText[0]);
                 }
                 })
             }
-        }).then(function(){
-        for (var i = 0; i<phoneText.length; i++){
-            console.log(phoneText);
-        }
         });
+
+        angularHomepage.searchPhone(searchQ);
+        angularHomepage.selectDropdownByNumber(browser, 0, 1000);
+
+        angularHomepage.countPhones().then(function(num) {
+            for (var i = 1; i <= num; i++) {
+                angularHomepage.findPhoneByOrder(i).getText().then(function (text) {
+                    phoneTextWeb.push(text.toUpperCase());
+                })
+            }
+        }).then(function() {
+            expect(phoneTextWeb).toEqual(_.sortBy(phoneTextHand));
+            //dump(_.sortBy(phoneTextWeb));
+            console.log(phoneTextWeb);
+            console.log(_.sortBy(phoneTextHand));
+            //dump(phoneTextHand);
+        });
+
         //expect(angularHomepage.findPhoneByOrder(1)).toEqual(20);
     });
 
